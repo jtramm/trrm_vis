@@ -11,7 +11,7 @@ import numpy as np
 #from matplotlib.patches import Circle, Wedge, Polygon
 #from matplotlib.collections import PatchCollection
  
-data = np.loadtxt("1")
+data = np.loadtxt("combined.txt")
 
 x_starts  = data[:,0]
 y_starts  = data[:,1]
