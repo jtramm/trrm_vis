@@ -54,6 +54,13 @@ def plot_single_path(i):
         alternator = 1
     else :
         arrow.remove()
+        if iteration > 2 :
+            delta_x = x_starts[iteration+1] - x_ends[iteration]
+            delta_y = y_starts[iteration+1] - y_ends[iteration]
+            if delta_x > 0.001 or delta_y > 0.001:
+                dx = x_ends[iteration] - x_starts[iteration]
+                dy = y_ends[iteration] - y_starts[iteration]
+                arrow2 = plt.arrow(x_starts[iteration], y_starts[iteration], dx, dy, head_width=0.05, head_length=0.1, fc='k', ec='k')
         plt.plot(x_vec, y_vec, c = color )
         iteration += 1
         alternator = 0
@@ -100,5 +107,5 @@ writer = Writer(fps=60, metadata=dict(artist='Me'), bitrate=10000)
  
 #animation = animation.FuncAnimation( fig, func = plot_single_path, x_starts.size, interval = 500 )
 animation = animation.FuncAnimation( fig, plot_single_path, x_starts.size*2, interval = 500 )
-#plt.show()
-animation.save('test.mp4', writer=writer, dpi=300)
+plt.show()
+#animation.save('test.mp4', writer=writer, dpi=300)
