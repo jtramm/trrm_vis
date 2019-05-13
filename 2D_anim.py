@@ -50,17 +50,24 @@ def plot_single_path(i):
     dx = x_ends[iteration] - x_starts[iteration]
     dy = y_ends[iteration] - y_starts[iteration]
     if alternator == 0 :
-        arrow = plt.arrow(x_starts[iteration], y_starts[iteration], dx, dy, head_width=0.05, head_length=0.1, fc='k', ec='k')
+        arrow = plt.arrow(x_starts[iteration], y_starts[iteration], dx, dy, head_width=0.05, head_length=0.05, fc='k', ec='k')
         alternator = 1
+        if iteration > 0 :
+            delta_x = x_starts[iteration] - x_ends[iteration-1]
+            delta_y = y_starts[iteration] - y_ends[iteration-1]
+            if delta_x > 0.001 or delta_y > 0.001:
+                plt.scatter(x_starts[iteration], y_starts[iteration], marker='o', c='k')
+        else:
+                plt.scatter(x_starts[iteration], y_starts[iteration], marker='o', c='k')
     else :
-        arrow.remove()
-        if iteration > 2 :
+        if iteration < x_starts.size - 1 :
+            arrow.remove()
             delta_x = x_starts[iteration+1] - x_ends[iteration]
             delta_y = y_starts[iteration+1] - y_ends[iteration]
             if delta_x > 0.001 or delta_y > 0.001:
                 dx = x_ends[iteration] - x_starts[iteration]
                 dy = y_ends[iteration] - y_starts[iteration]
-                arrow2 = plt.arrow(x_starts[iteration], y_starts[iteration], dx, dy, head_width=0.05, head_length=0.1, fc='k', ec='k')
+                arrow2 = plt.arrow(x_starts[iteration], y_starts[iteration], dx, dy, head_width=0.05, head_length=0.05, fc='k', ec='k')
         plt.plot(x_vec, y_vec, c = color )
         iteration += 1
         alternator = 0
@@ -103,7 +110,7 @@ circ=plt.Circle((0,0), radius=0.4096, color='k', fill=False)
 ax.add_patch(circ)
 
 Writer = animation.writers['ffmpeg']
-writer = Writer(fps=60, metadata=dict(artist='Me'), bitrate=10000)
+writer = Writer(fps=10, metadata=dict(artist='Me'), bitrate=10000)
  
 #animation = animation.FuncAnimation( fig, func = plot_single_path, x_starts.size, interval = 500 )
 animation = animation.FuncAnimation( fig, plot_single_path, x_starts.size*2, interval = 500 )
